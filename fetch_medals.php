@@ -11,7 +11,7 @@ try {
 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
  
-    $sql = "SELECT U.user_id, U.name, U.level, UP.pokemon_id, UP.pokemon_level, UP.pokemon_strength, PO.pokemon_name, PO.pokemon_type FROM User AS U, User_Pokedex AS UP, Pokemons AS PO WHERE U.user_id = UP.user_id AND PO.pokemon_id = UP.pokemon_id AND U.user_id = $userId";
+    $sql = "SELECT UM.USER_ID, UM.MEDAL_ID, U.NAME, U.LEVEL, M.MEDAL_NAME FROM User_achievements AS UM, User AS U, Medal AS M WHERE UM.MEDAL_ID=M.MEDAL_ID AND U.USER_ID=$userId AND U.USER_ID=UM.USER_ID";
     $prepareStatement = $db->prepare($sql);
     $prepareStatement->execute();
     $result = $prepareStatement->fetchAll(PDO::FETCH_ASSOC);

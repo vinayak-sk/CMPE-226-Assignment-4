@@ -11,7 +11,8 @@ try {
 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
  
-    $sql = "SELECT U.user_id, U.name, U.level, UP.pokemon_id, UP.pokemon_level, UP.pokemon_strength, PO.pokemon_name, PO.pokemon_type FROM User AS U, User_Pokedex AS UP, Pokemons AS PO WHERE U.user_id = UP.user_id AND PO.pokemon_id = UP.pokemon_id AND U.user_id = $userId";
+    /*$sql = "SELECT U.USER_ID, U.NAME, U.LEVEL, UP.POKEMON_ID, UP.POKEMON_STRENGTH, P.POKEMON_NAME, P.POKEMON_TYPE FROM USER AS U, USER_POKEDEX AS UP, POKEMONS AS P WHERE U.USER_ID = $userId AND UP.USER_ID = $userId AND P.POKEMON_ID = UP.POKEMON_ID GROUP BY P.POKEMON_TYPE";*/
+    $sql = "SELECT U.USER_ID, U.NAME, U.LEVEL, UP.POKEMON_ID, UP.POKEMON_LEVEL, P.POKEMON_NAME, P.POKEMON_TYPE FROM USER_POKEDEX AS UP, USER AS U, POKEMONS AS P WHERE U.user_id = $userId AND UP.USER_ID = U.USER_ID AND P.POKEMON_ID=UP.POKEMON_ID GROUP BY U.USER_ID, U.NAME, U.LEVEL, UP.POKEMON_ID, UP.POKEMON_LEVEL, P.POKEMON_NAME, P.POKEMON_TYPE ";
     $prepareStatement = $db->prepare($sql);
     $prepareStatement->execute();
     $result = $prepareStatement->fetchAll(PDO::FETCH_ASSOC);
